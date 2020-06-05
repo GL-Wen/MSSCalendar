@@ -36,4 +36,7 @@ typedef NS_ENUM(NSInteger, MSSCalendarViewControllerType)
 
 @property (nonatomic,assign)BOOL showAlertView;// 是否显示提示弹窗
 
+@property (nonatomic) BOOL single;// 是否单选
+@property (nonatomic, strong) NSArray *availableWeekDays;// 可用的星期
+
 @end

@@ -171,11 +171,19 @@
         cell.subLabel.textColor = MSS_SelectSubLabelTextColor;
         cell.isSelected = NO;
         cell.userInteractionEnabled = NO;
+        cell.subLabel.hidden = self.single;
         if(calendarItem.day > 0)
         {
             cell.dateLabel.text = [NSString stringWithFormat:@"%ld",(long)calendarItem.day];
-            cell.userInteractionEnabled = YES;
+            if (self.availableWeekDays) {
+                cell.userInteractionEnabled = [self.availableWeekDays containsObject:@(calendarItem.week)];
+            }
+            else
+            {
+                cell.userInteractionEnabled = YES;
+            }
         }
+        
         if(_showChineseCalendar)
         {
             cell.subLabel.text = calendarItem.chineseCalendar;
@@ -238,6 +246,11 @@
                 cell.userInteractionEnabled = NO;
             }
         }
+        
+        if (!cell.userInteractionEnabled) {
+            cell.dateLabel.textColor = MSS_TouchUnableTextColor;
+            cell.subLabel.textColor = MSS_TouchUnableTextColor;
+        }
     }
     return cell;
 }
@@ -289,6 +302,11 @@
             [self showPopViewWithIndexPath:indexPath];
         }
     }
+    
+    if (self.single) {
+        _endDate = _startDate;
+    }
+    
     [_collectionView reloadData];
 }
 
